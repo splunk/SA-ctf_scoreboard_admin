@@ -1,0 +1,11 @@
+<dashboard>
+  <label>Load staged answers</label>
+  <row>
+    <panel>
+      <table>
+        <title>Load staged answers</title>
+        <search ref="Load staged answers"></search>
+      </table>
+    </panel>
+  </row>
+</dashboard>

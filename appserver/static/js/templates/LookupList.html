@@ -1,0 +1,181 @@
+<div class="divider"></div>
+<div tabindex="-1" id="nothing-selected-modal" class="modal fade in hide">
+    <div class="modal-header">
+        <button type="button" class="close btn-dialog-close" data-dismiss="modal">x</button>
+        <h3 class="text-dialog-title">No Lookups Selected</h3>
+    </div>
+    <div class="modal-body form form-horizontal modal-body-scrolling">
+        No lookups were selected, please select at least one lookup.
+    </div>
+    <div class="modal-footer">
+        <a href="#" class="btn btn-dialog-cancel label_from_data" data-dismiss="modal" style="display: inline;">Close</a>
+    </div>
+</div>
+
+<div tabindex="-1" id="disable-lookup-modal" class="modal fade in hide">
+    <div class="modal-header">
+        <button type="button" class="close btn-dialog-close" data-dismiss="modal">x</button>
+        <h3 class="text-dialog-title">Disable KV Store Lookup</h3>
+    </div>
+    <div class="modal-body form form-horizontal modal-body-scrolling">
+        Are you sure you want to disable this lookup?
+        
+        <table class="disable-lookup-info-table">
+        	<tr>
+        		<td class="disable-lookup-info">Lookup</td>
+        		<td class="disable-lookup-name"></td>
+        	</tr>
+        	<tr>
+        		<td class="disable-lookup-info">Namespace</td>
+        		<td class="disable-lookup-namespace"></td>
+        	</tr>
+        	<tr>
+        		<td class="disable-lookup-info">Owner</td>
+        		<td class="disable-lookup-owner"></td>
+        	</tr>
+        </table>
+    </div>
+    <div class="modal-footer">
+        <a href="#" class="btn btn-dialog-cancel pull-left" data-dismiss="modal" style="display: inline;">Cancel</a>
+        <a href="#" class="btn btn-primary" id="disable-this-lookup" data-dismiss="modal" style="display: inline;">Yes, Disable</a>
+    </div>
+</div>
+
+<div id="success_message" class="hide alert alert-info">
+  <i class="icon-alert"></i><span id="success_text">The changes were successfully saved</span>
+</div>
+
+<div id="failure_message" class="hide alert alert-error">
+  <i class="icon-alert"></i><span id="error_text">Changes could not be saved</span>
+</div>
+
+<div class="selected-message-container pull-left">
+	<div id="selected-message" class="hide alert alert-info">
+	  <i class="icon-alert"></i><span id="selected-text"></span><a class="clear-selected-items" href="#">Clear selected items.</a>
+	</div>
+</div>
+
+<div class="btn-group create-content pull-right new-lookup-button-group">
+    <a class="btn btn-primary dropdown-toggle show-kv-supported-only" data-toggle="dropdown" href="#">
+        Create a New Lookup
+        <span class="caret"></span>
+    </a>
+    <ul class="dropdown-menu show-kv-supported-only create-new-lookup-dropdown">
+        <li><a href="lookup_edit?action=new&type=kv">KV Store lookup</a></li>
+        <li><a href="lookup_edit?action=new&type=csv">CSV lookup</a></li>
+    </ul>
+</div>
+
+<div class="btn-group create-content pull-right new-lookup-button-group">
+    <a class="btn btn-primary dropdown-toggle show-kv-unsupported-only hide" href="lookup_edit?action=new&type=csv">
+        Create a New Lookup
+    </a>
+</div>
+
+<script type="text/x-template" id="lookup-list-template">
+
+<div class="btn-group scope-filter pull-left btn-group-radio">
+	<a class="btn active" href="#">All</a>
+	<a class="btn" href="#">Global</a>
+	<a class="btn" href="#">Mine</a>
+</div>
+
+<% if (kv_lookups_supported) { %>
+<div class="btn-group type-filter pull-left dropdown-secondary">
+    <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+        Type
+        <span class="caret"></span>
+    </a>
+    <ul class="dropdown-menu" style="margin-left: -38px;margin-top: 2px;">
+		<li><a href="#"><i class="icon-check" />All</a></li>
+        <li><a href="#"><i class="icon-check hide" />KV Store Lookup</a></li>
+		<li><a href="#"><i class="icon-check hide" />Disabled KV Store Lookup</a></li>
+		<li><a href="#"><i class="icon-check hide" />CSV File Lookup</a></li>
+    </ul>
+</div>
+<% } %>
+
+<div class="btn-group app-filter pull-left dropdown-secondary">
+    <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+        App
+        <span class="caret"></span>
+    </a>
+    <ul class="dropdown-menu" style="width: 220px;margin-left: -38px;margin-top: 2px;">
+		<li><a href="#"><i class="icon-check " <% if(filter_app === null) { %>hide<% } %>/>All</a></li>
+	<% for(var c=0; c < apps.length; c++) { %>
+		<li><a href="#" data-name="apps[c].name"><i class="icon-check <% if(filter_app !== apps[c].label) { %>hide<% } %>" /><%- apps[c].label %></a></li>
+	<% } %>
+    </ul>
+</div>
+
+<form class="form-search pull-left">
+    <input type="text" placeholder="Filter by name" id="free-text-filter" class="input-large search-query" value="<% if(filter_text !== null) { %><%- filter_text %><% } %>">
+</form>
+
+<div class="lookups-count pull-left">
+	<%- lookups_count %> lookups
+</div>
+
+<table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-chrome display dataTable" id="table">
+    <thead>
+        <tr role="row">
+            <th>Name</th>
+            <th>Type</th>
+			<th>App</th>
+            <th>Owner</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        <% for (var i = 0; i < lookups.length; i++) { %>
+        <tr data-lookup-name="<%- lookups[i].name %>">
+            <td><a href="lookup_edit?owner=<%- lookups[i].endpoint_owner %>&namespace=<%- lookups[i].namespace %>&lookup=<%- lookups[i].name %>&type=<%- lookups[i].type %>"><%- lookups[i].name %></a></td>
+            <td><% if(lookups[i].type == "csv") { %>CSV File Lookup<% } else if(lookups[i].disabled) { %>Disabled KV Store Lookup<% } else { %>KV Store Lookup<% } %></td>
+			<td><%- getAppDescriptionFromName(lookups[i].namespace) %></td>
+			<td><%- lookups[i].owner %></td>
+			<td>
+				<a class="action-link" href="../../../custom/lookup_editor/lookup_edit/get_original_lookup_file?namespace=<%- lookups[i].namespace %>&owner=<%- lookups[i].endpoint_owner %>&lookup_file=<%- lookups[i].name %>&type=<%- lookups[i].type %>">Export</a>
+				
+                <% 
+                    var uri_parameter = null;
+                    var edit_acls_uri = null;
+
+                    if(lookups[i].type == 'kv'){
+                        uri_parameter = '/servicesNS/nobody/' + lookups[i].namespace + '/storage/collections/config/' + lookups[i].name;
+                        edit_acls_uri = '../../manager/permissions/' + lookups[i].namespace + '/storage/collections/config/' + lookups[i].name + '?uri=' + encodeURIComponent(uri_parameter);
+                    }
+                    else{
+                        uri_parameter = '/servicesNS/' + lookups[i].owner + '/' + lookups[i].namespace + '/data/lookup-table-files/' + lookups[i].name;
+                        edit_acls_uri = '../../manager/permissions/' + lookups[i].namespace + '/data/lookup-table-files/' + lookups[i].name + '?uri=' + encodeURIComponent(uri_parameter);
+                    }
+                %>
+                <a class="action-link external" target="_blank" href="<%- edit_acls_uri %>">Edit Permissions</a>
+                
+                <% if (lookups[i].type == "csv") { %>
+					<a class="action-link external" target="_blank" href="search?q=%7C%20inputlookup%20append%3Dt%20<%- lookups[i].name %>">Open in Search</a>
+				<% } if (lookups[i].type == "kv" && !lookups[i].disabled) { %>
+					<a class="action-link disable-kv-lookup" data-owner="<%- lookups[i].owner %>" data-namespace="<%- lookups[i].namespace %>" data-name="<%- lookups[i].name %>" href="#">Disable</a>
+				<% } if (lookups[i].type == "kv" && lookups[i].disabled) { %>
+					<a class="action-link enable-kv-lookup" data-owner="<%- lookups[i].owner %>" data-namespace="<%- lookups[i].namespace %>" data-name="<%- lookups[i].name %>" href="#">Enable</a>
+				<% } %> 
+                <% if (lookups[i].type == "kv" && getLookupTransform(lookups[i].name)) { %>
+					<a class="action-link external" target="_blank" href="search?q=%7C%20inputlookup%20append%3Dt%20<%- getLookupTransform(lookups[i].name) %>">Open in Search</a>
+				<% } %>
+			</td>
+        </tr>
+		<% } %>
+    </tbody>
+</table>
+
+</script>
+
+<div id="content">
+    <div class="loading-placeholder">
+        Retrieving lookups...
+                
+		<div class="progress">
+		  <div class="bar" style="width: 0%;"></div>
+		</div>
+    </div>
+</div>

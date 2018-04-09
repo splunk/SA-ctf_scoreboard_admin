@@ -1,0 +1,82 @@
+<dashboard>
+  <label>Scoreboard Health</label>
+  <row>
+    <panel>
+      <title>Lookup Editor Status</title>
+      <table>
+        <search>
+          <query>| rest /services/apps/local | search disabled=0 | search label="Lookup Editor"|  eval le_status=if(label=="Lookup Editor", "Installed", "Not installed") | rename le_status as "Lookup Editor Status" | table "Lookup Editor Status" version</query>
+          <earliest>$earliest$</earliest>
+          <latest>$latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">20</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">cell</option>
+        <option name="percentagesRow">false</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <event>
+        <title>Python Controller Errors</title>
+        <search>
+          <query>index=_internal sourcetype=splunk_web_service DEBUG</query>
+        </search>
+        <option name="table.sortDirection">asc</option>
+        <option name="list.drilldown">full</option>
+        <option name="list.wrap">1</option>
+        <option name="maxLines">5</option>
+        <option name="raw.drilldown">full</option>
+        <option name="rowNumbers">0</option>
+        <option name="table.drilldown">all</option>
+        <option name="table.wrap">1</option>
+        <option name="type">list</option>
+        <option name="count">10</option>
+        <fields>["host","source","sourcetype"]</fields>
+      </event>
+    </panel>
+    <panel>
+      <event>
+        <title>Service Account Permission Probs</title>
+        <search>
+          <query>index=_internal  sourcetype=splunkd "Could not find object id=ctf_answers"</query>
+          <earliest></earliest>
+          <latest></latest>
+        </search>
+        <fields>["host","source","sourcetype"]</fields>
+        <option name="table.sortDirection">asc</option>
+        <option name="list.drilldown">full</option>
+        <option name="list.wrap">1</option>
+        <option name="maxLines">5</option>
+        <option name="raw.drilldown">full</option>
+        <option name="rowNumbers">0</option>
+        <option name="table.drilldown">all</option>
+        <option name="table.wrap">1</option>
+        <option name="type">list</option>
+      </event>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Splunk and CTF User Analysis</title>
+      <table>
+        <search>
+          <query>|rest /services/authentication/users splunk_server=local | rename title as "Splunk User" | append [inputlookup ctf_users | rename Username as "CTF User"| fields "CTF User" ] | table "Splunk User"  "CTF User" roles</query>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">20</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">cell</option>
+        <option name="percentagesRow">false</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+  </row>
+</dashboard>

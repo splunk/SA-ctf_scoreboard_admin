@@ -1,0 +1,59 @@
+.start_time_div{
+}
+.end_time_div{
+}
+.start_time_summary{
+}
+.end_time_summary{
+}
+.ui-datepicker-title{
+	background: #000000;
+}
+.ui_tpicker_tzone dd,select{
+	width:100px;
+}
+.current_label{
+	font-weight: bold;
+	font-size: 35px;
+	width: 100%;
+	text-align: center;
+	padding: 5px;
+}
+.column {
+    float: left;
+    padding-left:15px;
+}
+.column0 {
+    width: 15%;
+}
+.column1 {
+    width: 17.5%;
+}
+.column2 {
+    width: 30%;
+}
+.column3 {
+    width: 15%;
+}
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+.step_number{
+	float:left;
+	font-weight:bold;
+	font-size: 20px;
+	color: green;
+}
+.step_title{
+	font-weight:bold;
+	font-size: 15px;
+	padding-left: 5px;
+	padding-bottom: 25px;
+}
+.submit_button{
+	background:green;
+	color: white;
+}

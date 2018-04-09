@@ -1,0 +1,11 @@
+<dashboard>
+  <label>Backup History</label>
+  <row>
+    <panel>
+      <table>
+        <title>KV Backup History</title>
+        <search ref="KV Backup History"></search>
+      </table>
+    </panel>
+  </row>
+</dashboard>

@@ -1,0 +1,11 @@
+<dashboard>
+  <label>Load sample questions</label>
+  <row>
+    <panel>
+      <table>
+        <title>Load sample questions</title>
+        <search ref="Load sample questions"></search>
+      </table>
+    </panel>
+  </row>
+</dashboard>

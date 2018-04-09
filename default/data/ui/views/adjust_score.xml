@@ -1,0 +1,64 @@
+<form>
+  <label>Adjust Scores</label>
+  <fieldset submitButton="false">
+    <input type="multiselect" token="Teams" searchWhenChanged="true">
+      <label>Select Teams</label>
+      <search>
+        <query>|rest /services/authentication/users splunk_server=local | where roles="ctf_competitor" | fields title</query>
+      </search>
+      <fieldForLabel>title</fieldForLabel>
+      <fieldForValue>title</fieldForValue>
+    </input>
+    <input type="dropdown" token="Number" searchWhenChanged="true">
+      <label>Question</label>
+      <search>
+        <query>| inputlookup ctf_questions | eval Number_and_Question = Number . ".  " . Question</query>
+      </search>
+      <fieldForLabel>Number_and_Question</fieldForLabel>
+      <fieldForValue>Number</fieldForValue>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <html>
+      <form action="/en-US/custom/SA-ctf_scoreboard/scoreboard_controller/adjust_score" method="get">
+        Apply to these teams: <b>$Teams$</b>
+        <br/>
+        Modify Question number: <b>$Number$</b>
+        <br/>
+        <input type="hidden" id="Teams" name="Teams" value="$Teams$"/>
+        <input type="hidden" id="Adjust" name="Adjust" value="True"/>
+        <input type="hidden" id="Number" name="Number" value="$Number$"/>
+
+
+        ✚ <input type="number" min="0" width="5" id="Base" name="Base"/> Enter number of <b>base points</b> to award. Do not leave it empty. Enter a 0 to indicate 0.
+        <br/>
+        ✚ <input type="number" min="0" width="5" id="Bonus" name="Bonus"/> Enter number of <b>bonus points</b> to award. Do not leave it empty. Enter a 0 to indicate 0.
+        <br/>
+        ➖ <input type="number" min="0" id="Penalty" name="Penalty"/> Enter number of <b>penalty points</b> to assess. Do not leave it empty. Enter a 0 to indicate 0.
+        <br/>
+        ☰ <input type="text" id="Note" name="Note"/> REQUIRED Enter a <b>brief note</b> that explains the reason for this adjustment
+        <br/>
+        <input type="submit" value="Submit"/>
+      </form>
+    </html>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <table>
+        <title>Questions</title>
+        <search>
+          <query>| inputlookup ctf_questions | table Number Question BasePoints StartTime EndTime</query>
+          <earliest>0</earliest>
+          <latest></latest>
+        </search>
+        <option name="wrap">true</option>
+        <option name="rowNumbers">false</option>
+        <option name="drilldown">cell</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="count">10</option>
+      </table>
+    </panel>
+  </row>
+</form>

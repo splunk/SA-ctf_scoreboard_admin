@@ -1,0 +1,1 @@
+≤require.config({paths:{lookup_edit:"../app/SA-ctf_scoreboard_admin/js/views/LookupEditView"}});require(["jquery","underscore","backbone","lookup_edit","splunkjs/mvc/simplexml/ready!"],function(d,c,e,b){var a=new b({el:d("#lookups_editor")});a.render()});

@@ -1,0 +1,95 @@
+<dashboard>
+  <label>Streaks And Penalties</label>
+  <row>
+    <panel>
+      <title>Top 10 Current Winning Streaks</title>
+      <table>
+        <search>
+          <query>index="scoreboard_admin" "result=*"  Number!=1 
+| eval binaryresult=if(Result="Correct",1,0) 
+| reverse 
+| table _time,Number,Result,binaryresult,user, QuestionOfficial,sum
+| streamstats  current=f latest(binaryresult) as oldBinary by user
+| eval dbr = binaryresult - oldBinary
+| eval dbr=if(dbr!=0, 1, null) | streamstats sum(dbr) as uniquestreak by user | fillnull uniquestreak | streamstats sum(binaryresult) as Winning_Streak by uniquestreak, user | eval Winning_Streak=if(dbr=1 AND Result="Incorrect", -1, Winning_Streak)  | search user=user*  | stats latest(Winning_Streak) as Winning_Streak latest(Number) as Question latest(_time) as time latest(QuestionOfficial) as "Latest Correctly Answered Question" sparkline(max(Winning_Streak)) as Trend by user  | sort 10 - Winning_Streak | eval Winning_Streak="W"+Winning_Streak | rename Winning_Streak as "Winning Streak" | lookup ctf_users Username AS user OUTPUT DisplayUsername | lookup currentscore.csv Team AS DisplayUsername OUTPUT Rank, Score | rename DisplayUsername as Player |  eval time=strftime(time,"%m/%d/%y %H:%M:%S") | fields - user currentcount totalcount</query>
+          <earliest>0</earliest>
+          <latest>now</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">20</option>
+        <option name="dataOverlayMode">highlow</option>
+        <option name="drilldown">cell</option>
+        <option name="percentagesRow">false</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+        <format field="Trend" type="sparkline">
+          <option name="type">bar</option>
+          <option name="height">50px</option>
+          <option name="colorMap">
+            <option name="5:">#87af53</option>
+            <option name="-1">#af5353</option>
+          </option>
+          <option name="barSpacing">2</option>
+          <option name="barWidth">6</option>
+          <option name="chartRangeMin">-10</option>
+          <option name="chartRangeMax">10</option>
+        </format>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Top 10 Current Losing Streaks</title>
+      <table>
+        <search>
+          <query>index="scoreboard_admin" "result=*" Number!=1 user=*
+| eval binaryresult=if(Result="Incorrect",1,0) 
+| reverse 
+| table _time,Number,Result,binaryresult,user, QuestionOfficial,sum, Penalty, Answer
+| streamstats current=f latest(binaryresult) as oldBinary by user 
+| eval dbr = binaryresult - oldBinary 
+| eval dbr=if(dbr!=0, 1, null) 
+| streamstats sum(dbr) as uniquestreak by user 
+| fillnull uniquestreak 
+| streamstats sum(binaryresult) as Losing_Streak by uniquestreak, user 
+| eval Losing_Streak=if(dbr=1 AND Result="Incorrect", 0, Losing_Streak) 
+| eval Losing_Streak_Trend=0-Losing_Streak
+|  streamstats sum(Penalty) as totalpenalty by user
+| stats latest(Losing_Streak) as Losing_Streak latest(Number) as Question latest(_time) as time latest(QuestionOfficial) as "Latest Incorrectly Answered Question" latest(Answer) as "Wrong Answer" max(totalpenalty) as Penalty sparkline(max(Losing_Streak_Trend)) as Trend by user 
+| eval Losing_Streak="L"+Losing_Streak 
+| rename Losing_Streak as "Losing_Streak" 
+| lookup ctf_users Username AS user OUTPUT DisplayUsername 
+| lookup currentscore.csv Team AS DisplayUsername OUTPUT Rank,Score
+| rename DisplayUsername as Player, Losing_Streak as "Losing Streak"
+| eval time=strftime(time,"%m/%d/%y %H:%M:%S") 
+| fields - user
+| sort - Penalty
+| head 10</query>
+          <earliest>1487905200</earliest>
+          <latest>1487919540</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">20</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">cell</option>
+        <option name="percentagesRow">false</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+        <format field="Trend" type="sparkline">
+          <option name="type">bar</option>
+          <option name="height">50px</option>
+          <option name="colorMap">
+            <option name="5:">#87af53</option>
+            <option name=":-100">#ff3333</option>
+          </option>
+          <option name="barSpacing">2</option>
+          <option name="barWidth">6</option>
+          <option name="chartRangeMin">-20</option>
+          <option name="chartRangeMax">20</option>
+        </format>
+      </table>
+    </panel>
+  </row>
+</dashboard>

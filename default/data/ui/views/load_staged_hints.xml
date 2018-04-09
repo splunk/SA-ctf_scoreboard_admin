@@ -1,0 +1,11 @@
+<dashboard>
+  <label>Load staged hints</label>
+  <row>
+    <panel>
+      <table>
+        <title>Load staged hints</title>
+        <search ref="Load staged hints"></search>
+      </table>
+    </panel>
+  </row>
+</dashboard>

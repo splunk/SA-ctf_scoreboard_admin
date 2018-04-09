@@ -1,0 +1,11 @@
+<dashboard>
+  <label>Load sample hint entitlements</label>
+  <row>
+    <panel>
+      <table>
+        <title>Load sample hint entitlements</title>
+        <search ref="Load sample hint entitlements"></search>
+      </table>
+    </panel>
+  </row>
+</dashboard>

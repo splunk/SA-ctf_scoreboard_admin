@@ -1,0 +1,175 @@
+<form>
+  <label>User Investigator</label>
+  <description>Deep Dive a User, ostensibly to help them</description>
+  <search id="base_1">
+    <query>index="scoreboard_admin" "Result=*" Number !=1 `get_user_info`
+         </query>
+    <earliest>0</earliest>
+    <sampleRatio>1</sampleRatio>
+  </search>
+  <search id="base_2">
+    <query>index="scoreboard_admin" "Result=*" Number !=1 `get_user_info`
+         </query>
+    <earliest>$earliest$</earliest>
+    <latest>$latest$</latest>
+  </search>
+  <fieldset submitButton="false" autoRun="true">
+    <input type="dropdown" token="team" searchWhenChanged="true">
+      <search id="base_0">
+        <query>index="scoreboard_admin" "Result=*" Number !=1 `get_user_info` | dedup Team
+        </query>
+        <earliest>0</earliest>
+      </search>
+      <label>User</label>
+      <fieldForLabel>Team</fieldForLabel>
+      <fieldForValue>Team</fieldForValue>
+      <selectFirstChoice>true</selectFirstChoice>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <title>Average Time to Answer</title>
+      <single>
+        <search base="base_1">
+          <query>
+          | search Team="$team$" | streamstats window=2 current=t global=f earliest(_time) as curr, latest(_time) as next | eventstats count as totalcount| eval delta=next-curr | stats avg(delta) as avgquestiontime | eval avgquestiontime=round(avgquestiontime,0)</query>
+        </search>
+        <option name="rangeValues">[300,600,900,1200]</option>
+        <option name="underLabel">seconds</option>
+        <option name="useColors">1</option>
+      </single>
+    </panel>
+    <panel>
+      <title>Minutes Played</title>
+      <single>
+        <search base="base_1">
+          <query>
+            | search Team="$team$" 
+            | stats earliest(_time) as firsttime,latest(_time) as lasttime 
+            | eval totaltime=lasttime-firsttime 
+            | fields totaltime  
+            | eval totaltime=totaltime/60 
+            | eval totaltime=round(totaltime,0)</query>
+        </search>
+        <option name="underLabel">minutes</option>
+      </single>
+    </panel>
+    <panel>
+      <title>Questions Attempted</title>
+      <single>
+        <search base="base_1">
+          <query>
+          | search Team="$team$" | stats dc(Number) as numquestions</query>
+        </search>
+        <option name="underLabel">Questions</option>
+      </single>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Current Score</title>
+      <single>
+        <search base="base_1">
+          <query>
+          | search Team="$team$" | lookup currentscore Team OUTPUT Score | stats values(Score) as Score</query>
+        </search>
+        <option name="underLabel">Points</option>
+      </single>
+    </panel>
+    <panel>
+      <title>Current Rank</title>
+      <single>
+        <search base="base_1">
+          <query> 
+          | search Team="$team$" | lookup currentscore Team OUTPUT Rank | stats values(Rank) as rank</query>
+        </search>
+        <option name="underLabel">Place</option>
+        <option name="useColors">1</option>
+      </single>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Most Incorrectly Answered</title>
+      <single>
+        <search>
+          <query>index="scoreboard_admin" "Result=*" Number !=1 `get_user_info` |  search Team="$team$" | stats values(QuestionOfficial) as question, count by Number | head 1 | eval questnum=Number+":"+question | fields questnum</query>
+          <earliest>0</earliest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="colorBy">value</option>
+        <option name="colorMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="numberPrecision">0</option>
+        <option name="rangeColors">["0x65a637","0x6db7c6","0xf7bc38","0xf58f39","0xd93f3c"]</option>
+        <option name="rangeValues">[0,30,70,100]</option>
+        <option name="showSparkline">1</option>
+        <option name="showTrendIndicator">1</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="trendColorInterpretation">standard</option>
+        <option name="trendDisplayMode">absolute</option>
+        <option name="unitPosition">after</option>
+        <option name="useColors">0</option>
+        <option name="useThousandSeparators">1</option>
+      </single>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Question Path</title>
+      <viz type="simpletimeseries_app.simpletimeseries">
+        <search base="base_1">
+          <query>
+          | search Team="$team$" | rename Number as "Question Number" |eval color=if(Result="Incorrect","red","green") |table _time Result "Question Number" color</query>
+        </search>
+        <option name="simpletimeseries_app.simpletimeseries.showDatapoints">true</option>
+        <option name="simpletimeseries_app.simpletimeseries.showLegend">false</option>
+      </viz>
+    </panel>
+    <panel>
+      <title>Question/Answer Density</title>
+      <viz type="simpletimeseries_app.simpletimeseries">
+        <search base="base_1">
+          <query>| search Team="$team$" 
+| eval binresult=if(Result="Correct",1000,2000) 
+| table _time, Number,Result</query>
+        </search>
+        <option name="drilldown">all</option>
+      </viz>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Order of Correct Questions</title>
+      <single>
+        <search base="base_2">
+          <query>
+          | search Team="$team$" | table Number|reverse | stats list(Number) as number |mvcombine number</query>
+        </search>
+      </single>
+    </panel>
+    <panel>
+      <title>Order of Incorrect Questions</title>
+      <single>
+        <search base="base_2">
+          <query>
+        | search Team="$team$" | table Number|reverse | stats list(Number) as number |mvcombine number</query>
+        </search>
+      </single>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Question Details</title>
+      <table>
+        <search base="base_2">
+          <query>
+          | table _time, Number, QuestionOfficial, Answer, user, Result,DisplayUsername</query>
+        </search>
+        <option name="count">25</option>
+      </table>
+    </panel>
+  </row>
+</form>

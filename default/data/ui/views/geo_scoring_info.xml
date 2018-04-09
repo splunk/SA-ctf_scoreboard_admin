@@ -1,0 +1,128 @@
+<form>
+  <label>Geographic Login Info</label>
+  <fieldset submitButton="false">
+    <input type="time" token="field1">
+      <label></label>
+      <default>
+        <earliest>-30d@d</earliest>
+        <latest>now</latest>
+      </default>
+    </input>
+    <input type="dropdown" token="Teams" searchWhenChanged="true">
+      <label>Select Team (optional)</label>
+      <search>
+        <query>|rest /services/authentication/users splunk_server=local | where roles="ctf_competitor" | fields title</query>
+      </search>
+      <fieldForLabel>title</fieldForLabel>
+      <fieldForValue>title</fieldForValue>
+      <choice value="*">ALL</choice>
+      <default>*</default>
+      <initialValue>*</initialValue>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <map>
+        <title>Map of Logins by Country</title>
+        <search id="base_0">
+          <query>index=_internal sourcetype=splunkd_ui_access user!="-" |iplocation clientip geostats globallimit=0 count by user | rename user as team</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+        </search>
+        <option name="mapping.choroplethLayer.colorBins">5</option>
+        <option name="mapping.choroplethLayer.colorMode">auto</option>
+        <option name="mapping.choroplethLayer.maximumColor">0xDB5800</option>
+        <option name="mapping.choroplethLayer.minimumColor">0x2F25BA</option>
+        <option name="mapping.choroplethLayer.neutralPoint">0</option>
+        <option name="mapping.choroplethLayer.shapeOpacity">0.75</option>
+        <option name="mapping.choroplethLayer.showBorder">1</option>
+        <option name="mapping.data.maxClusters">10000</option>
+        <option name="mapping.drilldown">all</option>
+        <option name="mapping.map.center">(0,0)</option>
+        <option name="mapping.map.panning">true</option>
+        <option name="mapping.map.scrollZoom">false</option>
+        <option name="mapping.map.zoom">2</option>
+        <option name="mapping.markerLayer.markerMaxSize">50</option>
+        <option name="mapping.markerLayer.markerMinSize">10</option>
+        <option name="mapping.markerLayer.markerOpacity">0.8</option>
+        <option name="mapping.showTiles">1</option>
+        <option name="mapping.tileLayer.maxZoom">7</option>
+        <option name="mapping.tileLayer.minZoom">0</option>
+        <option name="mapping.tileLayer.tileOpacity">1</option>
+        <option name="mapping.type">marker</option>
+        <option name="drilldown">all</option>
+      </map>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <table>
+        <title>Teams with Highest Distinct Count of Addresses</title>
+        <search base="base_0">
+          <query> stats dc(clientip) as numip,values(clientip) as addresses,dc(Country) as countries,values(Country) as numcountries by user| rename user as team | sort -numip</query>
+        </search>
+        <option name="count">10</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">cell</option>
+        <option name="rowNumbers">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+    <panel>
+      <table>
+        <title>Teams Logging In from Outside US</title>
+        <search base="base_0">
+          <query>stats sparkline count,values(user) as team by Country |where Country !="United States" | fields - count</query>
+        </search>
+        <option name="wrap">true</option>
+        <option name="rowNumbers">false</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">cell</option>
+        <option name="count">10</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <table>
+        <title>Non Florida Logins from ip-locationable Domains</title>
+        <search base="base_0">
+          <query>eval regionlen=len(Region) | stats sparkline count,values(user) as team,values(regionlen) as regionlen by Country,Region |where (Country ="United States" AND Region!="Florida" and regionlen&gt;0) | fields - regionlen | sort - count</query>
+        </search>
+        <option name="wrap">true</option>
+        <option name="rowNumbers">false</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">cell</option>
+        <option name="count">10</option>
+      </table>
+    </panel>
+    <panel>
+      <table>
+        <title>Teams Logging In from ip-locationable Domains&gt;1</title>
+        <search base="base_0">
+          <query>search clientip!=63.85* | iplocation clientip | eval regionlen=len(Region) | stats sparkline count,values(user) as team,values(regionlen) as regionlen by clientip | lookup dnslookup clientip | `ut_parse(clienthost,*)` | stats dc(ut_domain) as numdomains,values(ut_domain) as domains by team | where numdomains&gt;1 | sort -numdomains</query>
+        </search>
+        <option name="wrap">true</option>
+        <option name="rowNumbers">false</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">cell</option>
+        <option name="count">10</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <table>
+        <title>Teams logging in from non-event network with whois information on clientip</title>
+        <search base="base_0">
+          <query>search clientip!=63.85 |stats count by user,clientip | lookup whoisLookup ip AS clientip | eval _raw=whois | xmlkv | rex field=Email "^\S+@(?&lt;whoisdomain&gt;\S+)$" | iplocation clientip| lookup dnslookup clientip |`ut_parse(clienthost,*)`| stats values(whoisdomain) as whoisdomain, values(clientip) as ip, values(ut_domain) as domain, dc(clientip) as uniqueip by user|rename user as team | sort -uniqueip</query>
+        </search>
+        <option name="count">10</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">cell</option>
+        <option name="rowNumbers">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+  </row>
+</form>

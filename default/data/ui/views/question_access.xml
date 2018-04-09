@@ -1,0 +1,28 @@
+<dashboard script="questionaccess.js" stylesheet="questionaccess.css">
+  <label>Question Access</label>
+  <row>
+    <panel>
+      <title>Question Access for CTF Participants</title>
+      <single>
+        <search>
+          <query>|checkqaccess | eval dontcare=$somethingchanged$ | eval access=if(canread==1,"Enabled","Disabled") | fields access | rename access as "Competitor Question Access"</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="drilldown">none</option>
+      </single>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <html>
+        <div class="togglebuttondiv">
+          <span class="togglebuttondiv">
+            <input id="togglebutton" type="button" value="Toggle Access" class="togglebutton"/>
+          </span>
+        </div>
+      </html>
+    </panel>
+  </row>
+</dashboard>

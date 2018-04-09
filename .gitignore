@@ -1,0 +1,6 @@
+backuprestore.config
+currentscore.csv
+*staged.csv
+*.pyc
+*.pyo
+.DS_Store

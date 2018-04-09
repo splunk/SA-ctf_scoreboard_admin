@@ -1,0 +1,11 @@
+<dashboard>
+  <label>Load staged badges</label>
+  <row>
+    <panel>
+      <table>
+        <title>Load staged badges</title>
+        <search ref="Load staged badges"></search>
+      </table>
+    </panel>
+  </row>
+</dashboard>

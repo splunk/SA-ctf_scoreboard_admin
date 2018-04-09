@@ -1,0 +1,54 @@
+<form>
+  <label>Answers by User</label>
+  <fieldset submitButton="false" autoRun="true">
+    <input type="multiselect" token="team" searchWhenChanged="true">
+      <label>Teams</label>
+      <search>
+        <query>| inputlookup ctf_users 
+| eval Team=if(Team != "", Team, DisplayUsername) 
+| eval Team=if(Team != "", Team, Username) 
+| eval Team=if(Team != "", Team, user) | dedup Team</query>
+        <earliest>0</earliest>
+      </search>
+      <fieldForLabel>Team</fieldForLabel>
+      <fieldForValue>Team</fieldForValue>
+      <delimiter> OR </delimiter>
+      <choice value="*">All</choice>
+      <default>*</default>
+      <initialValue>*</initialValue>
+    </input>
+    <input type="multiselect" token="number" searchWhenChanged="true">
+      <label>Question Number</label>
+      <search>
+        <query>| inputlookup ctf_answers
+        | Dedup Number</query>
+        <earliest>0</earliest>
+      </search>
+      <fieldForLabel>Number</fieldForLabel>
+      <fieldForValue>Number</fieldForValue>
+      <delimiter> OR </delimiter>
+      <choice value="*">All</choice>
+      <default>*</default>
+      <initialValue>*</initialValue>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <table>
+        <search>
+          <query>earliest=0 
+            index="scoreboard_admin"  
+| lookup ctf_users Username as user 
+| eval Team=if(Team != "", Team, DisplayUsername) 
+| eval Team=if(Team != "", Team, Username) 
+| eval Team=if(Team != "", Team, user) 
+| search Team="$team$" 
+| search Number=$number$
+| table Number, QuestionOfficial, Answer, DisplayUsername, Team, _time, Result</query>
+          <earliest>$earliest$</earliest>
+          <latest>$latest$</latest>
+        </search>
+      </table>
+    </panel>
+  </row>
+</form>

@@ -1,0 +1,1 @@
+require.config({paths:{lookup_list:"../app/lookup_editor/js/views/LookupListView"}});require(["jquery","underscore","backbone","lookup_list","splunkjs/mvc/simplexml/ready!"],function(d,b,e,c){var a=new c({el:d("#lookups_list")});a.render()});

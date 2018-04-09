@@ -1,0 +1,11 @@
+<dashboard>
+  <label>Load sample hints</label>
+  <row>
+    <panel>
+      <table>
+        <title>Load sample hints</title>
+        <search ref="Load sample hints"></search>
+      </table>
+    </panel>
+  </row>
+</dashboard>

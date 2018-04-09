@@ -1,0 +1,21 @@
+<dashboard>
+  <label>Score Adjustment Results</label> 
+  <row>
+    <panel>
+      <html>
+        Question: $QuestionOfficial$<br/>
+        Number: $Number$<br/>
+        User: $user$<br/>
+        Base points available: $BasePointsAvailable$<br/>
+        Start time (epoch): $StartTime$<br/>
+        End time (epoch): $EndTime$<br/>
+        Results: $Result$<br/>
+        Penalty: $Penalty$<br/>
+        Base points awarded: $BasePointsAwarded$<br/>
+        Speed bonus points awarded: $SpeedBonusAwarded$<br/>
+        Note: $Note$<br/>
+        <a href="adjust_score"> Adjust more scores. </a>
+      </html>
+    </panel>
+  </row>
+</dashboard>

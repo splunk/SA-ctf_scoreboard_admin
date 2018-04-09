@@ -1,0 +1,65 @@
+<nav search_view="search" color="#000000">
+  <view name="event_info" default='true' />
+  <collection label="View...">
+    <view name="competitors"/>
+    <view name="q__a" />
+  </collection>
+  <collection label="Edit...">
+    <a href='/app/lookup_editor/lookup_edit?owner=nobody&amp;namespace=SA-ctf_scoreboard&amp;lookup=ctf_questions&amp;type=kv'>Edit Questions</a>
+    <a href='/app/lookup_editor/lookup_edit?owner=nobody&amp;namespace=SA-ctf_scoreboard_admin&amp;lookup=ctf_answers&amp;type=kv'>Edit Answers</a>
+    <a href='/app/lookup_editor/lookup_edit?owner=nobody&amp;namespace=SA-ctf_scoreboard&amp;lookup=ctf_users&amp;type=kv'>Edit Teams/Users</a>
+    <a href='/app/lookup_editor/lookup_edit?owner=nobody&amp;namespace=SA-ctf_scoreboard_admin&amp;lookup=ctf_hints&amp;type=kv'>Edit Hints</a>
+    <a href='/app/lookup_editor/lookup_edit?owner=nobody&amp;namespace=SA-ctf_scoreboard&amp;lookup=ctf_hint_entitlements&amp;type=kv'>Edit Hint Entitlements</a>
+    <a href='/app/lookup_editor/lookup_edit?owner=nobody&amp;namespace=SA-ctf_scoreboard&amp;lookup=ctf_badges&amp;type=kv'>Edit eBadges</a>
+    <a href='/app/lookup_editor/lookup_edit?owner=nobody&amp;namespace=SA-ctf_scoreboard&amp;lookup=ctf_badge_entitlements&amp;type=kv'>Edit eBadge Entitlements</a>
+    <view name="assign_ebadges" />
+    <view name="adjust_score" />
+    <view name="time_setup" />
+    <view name="question_access" />
+  </collection>
+  <collection label="Data Management...">
+    <collection label="Backups...">
+      <view name="kv_backup_history"/>
+    </collection>
+    <collection label="Load SAMPLE data (DANGER)...">
+	  <view name="load_sample_usersteams"/>
+      <view name="load_sample_questions"/>
+      <view name="load_sample_answers"/>
+      <view name="load_sample_hints"/>
+      <view name="load_sample_hint_entitlements"/>
+      <view name="load_sample_badges"/>
+      <view name="load_sample_badge_entitlements"/>
+    </collection>
+    <collection label="Load PRODUCTION data (DANGER)...">
+      <view name="stage_production_content"/>
+	  <view name="load_staged_users"/>
+      <view name="load_staged_questions"/>
+      <view name="load_staged_answers"/>
+      <view name="load_staged_hints"/>
+      <view name="load_staged_badges"/>
+
+    </collection>
+  </collection>
+  <collection label="Scoring Analytics">
+    <view name="user_investigator"/>
+    <view name="streaks_and_penalties" />
+    <view name="geo_scoring_info" />
+    <view name="all_questions_by_team"/>
+    <view name="cumulative_score_detail" />
+    <collection label="Beta Analytics">
+      <view name="answers_by_user" />
+      <view name="timebased_question_and_answering_palette" />
+    </collection>
+  </collection>
+  <view name="scoreboard_health" />
+  <collection label="Music and Timer">
+    <view name="somafm_music_to_hack_by"/>
+    <view name="final_countdown"/>
+    <view name="countdown"/>
+  </collection>
+  <view name="search" />
+  <view name="data_models" />
+  <view name="reports" />
+  <view name="alerts" />
+  <view name="dashboards" />
+</nav>

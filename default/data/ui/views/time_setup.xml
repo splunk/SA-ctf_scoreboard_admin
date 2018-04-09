@@ -1,0 +1,111 @@
+<dashboard script="jquery-ui/jquery-ui.min.js, timepicker/jquery-ui-timepicker-addon.js, time_setup.js" stylesheet="css/ui-lightness/jquery-ui.min.css, css/jquery-ui-timepicker-addon.css, time_setup.css ">
+  <label>Time Setup</label>
+  <row>
+    <panel>
+      <title>Edit Start and End Times</title>
+      <html>
+      <div class="row">
+        <div class="column column0">
+          <span class="step_number">0</span><span class="step_title">Review current settings.</span>
+          <span> 
+          <ul> 
+            <li>Ensure you have the proper question set loaded.(see below).</li>
+            <li>Confirm that start/end times require adjustment. (see below) </li>
+          </ul>
+          </span>
+        </div>
+        <div class="column column1">
+          <span class="step_number">1</span><span class="step_title">Specify new Start/End Times</span>
+          <div id="start_time_div" class="start_time_div">
+            <span style="font-weight:bold;">Start Time<br/></span>
+            <input id="start_time_picker" />
+          </div>
+          <div id="end_time_div" class="end_time_div">
+            <span style="font-weight:bold;">End Time<br/></span>
+            <input id="end_time_picker" />
+          </div>
+        </div>
+        <div class="column column2">
+          <span class="step_number">2</span><span class="step_title">Submit changes</span>
+          <div id="update_results_header" class="update_results_header">Results</div>
+          <div id="update_results" class="update_results"></div>
+          <div>
+            <input id="submit_button" type="button" value="Submit Changes" class="submit_button" />
+          </div>
+        </div>
+      </div>
+      </html>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <html>
+        <div class="current_label">
+          <span class="current_label">Current Questions and Start / End Times</span>
+        </div>
+      </html>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Earliest Start Time</title>
+      <single>
+        <search>
+          <query>|inputlookup ctf_questions | eval dontcare=$somethingchanged$ |  stats min(StartTime) as MinStartTime | eval NiceStartTime = strftime(MinStartTime, "%+") | fields NiceStartTime</query>
+          <earliest>0</earliest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="drilldown">none</option>
+      </single>
+    </panel>
+    <panel>
+      <title>Latest End Time</title>
+      <single>
+        <search>
+          <query>|inputlookup ctf_questions | eval dontcare=$somethingchanged$ | stats max(EndTime) as MaxEndTime | eval NiceEndTime = strftime(MaxEndTime, "%+") | fields NiceEndTime</query>
+          <earliest>0</earliest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="drilldown">none</option>
+      </single>
+    </panel>
+    <panel>
+      <title>Start / End Time Consistency</title>
+      <table>
+        <search>
+          <query>| inputlookup ctf_questions | eval dontcare=$somethingchanged$
+| stats dc(StartTime) as NumStartTimes dc(EndTime) as NumEndTimes 
+| eval Status=if(NumStartTimes==1 OR NumEndTimes==1, "OK - Single start and single end time detected", "Warning - different start/end times detected")</query>
+          <earliest>0</earliest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">20</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="percentagesRow">false</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Question Summary</title>
+      <table>
+        <search>
+          <query>|inputlookup ctf_questions | eval dontcare=$somethingchanged$ | eval NiceStartTime = strftime(StartTime, "%+") |  eval NiceEndTime = strftime(EndTime, "%+")  |  sort StartTime Number | fields Number Question BasePoints NiceStartTime StartTime NiceEndTime EndTime</query>
+          <earliest>0</earliest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">20</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="percentagesRow">false</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+  </row>
+</dashboard>

@@ -1,0 +1,11 @@
+<dashboard>
+  <label>Load sample badge entitlements</label>
+  <row>
+    <panel>
+      <table>
+        <title>Load sample questions</title>
+        <search ref="Load sample badges"></search>
+      </table>
+    </panel>
+  </row>
+</dashboard>

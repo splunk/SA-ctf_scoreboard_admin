@@ -1,0 +1,11 @@
+<dashboard>
+  <label>Load staged users</label>
+  <row>
+    <panel>
+      <table>
+        <title>Load staged users</title>
+        <search ref="Load staged users"></search>
+      </table>
+    </panel>
+  </row>
+</dashboard>

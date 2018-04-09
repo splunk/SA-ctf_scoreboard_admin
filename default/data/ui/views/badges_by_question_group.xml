@@ -1,0 +1,182 @@
+<dashboard>
+  <label>If there is a name in the "panel" they should get a badge for completing all of the objectives</label>
+  <row>
+    <panel>
+      <title>Insider Threat</title>
+      <table>
+        <title>Questions 100-105. Award the "Insider Threat" badge</title>
+        <search>
+          <query>index="scoreboard_admin" "result=*"  Number!=1 
+| eval binaryresult=if(Result="Correct",1,0) 
+| search  binaryresult=1 AND (Number&gt;=100 AND Number&lt;=105)
+| stats dc(Number) by user
+| rename dc(Number) AS BINGO
+| search BINGO=6
+| lookup ctf_users Username AS user OUTPUT DisplayUsername
+| streamstats count
+| table  count user DisplayUsername BINGO
+</query>
+          <earliest>0</earliest>
+          <latest>now</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">20</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="percentagesRow">false</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+    <panel>
+      <title>Web Attack</title>
+      <table>
+        <title>Questions 200-209. Award the "Web Master" badge</title>
+        <search>
+          <query>index="scoreboard_admin" "result=*"  Number!=1 
+| eval binaryresult=if(Result="Correct",1,0) 
+| search  binaryresult=1 AND (Number&gt;=200 AND Number&lt;=209)
+| stats dc(Number) by user
+| rename dc(Number) AS BINGO
+| search BINGO=10
+| lookup ctf_users Username AS user OUTPUT DisplayUsername
+| streamstats count
+| table  count  user DisplayUsername BINGO</query>
+          <earliest>0</earliest>
+          <latest>now</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">20</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="percentagesRow">false</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+    <panel>
+      <title>Ransomware</title>
+      <table>
+        <title>Questions 300-309. Award the "Ransomwarrior" badge</title>
+        <search>
+          <query>index="scoreboard_admin" "result=*"  Number!=1 
+| eval binaryresult=if(Result="Correct",1,0) 
+| search  binaryresult=1 AND (Number&gt;=300 AND Number&lt;=309)
+| stats dc(Number) by user
+| rename dc(Number) AS BINGO
+| search BINGO=10
+| lookup ctf_users Username AS user OUTPUT DisplayUsername
+| streamstats count
+| table  count  user DisplayUsername BINGO</query>
+          <earliest>0</earliest>
+          <latest>now</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">20</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="percentagesRow">false</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>APT</title>
+      <table>
+        <title>Questions 400-409. Award the "Taedonggang" badge</title>
+        <search>
+          <query>index="scoreboard_admin" "result=*"  Number!=1 
+| eval binaryresult=if(Result="Correct",1,0) 
+| search  binaryresult=1 AND (Number&gt;=400 AND Number&lt;=409)
+| stats dc(Number) by user
+| rename dc(Number) AS BINGO
+| search BINGO=10
+| lookup ctf_users Username AS user OUTPUT DisplayUsername
+| streamstats count
+| table  count  user DisplayUsername BINGO</query>
+          <earliest>0</earliest>
+          <latest>now</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">20</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="percentagesRow">false</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+    <panel>
+      <title>Fraud</title>
+      <table>
+        <title>Questions 500-509. Award the "Frog Protection" badge</title>
+        <search>
+          <query>index="scoreboard_admin" "result=*"  Number!=1 
+| eval binaryresult=if(Result="Correct",1,0) 
+| search  binaryresult=1 AND (Number&gt;=500 AND Number&lt;=509)
+| stats dc(Number) by user
+| rename dc(Number) AS BINGO
+| search BINGO=10
+| lookup ctf_users Username AS user OUTPUT DisplayUsername
+| streamstats count
+| table  count  user DisplayUsername BINGO</query>
+          <earliest>0</earliest>
+          <latest>now</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">20</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="percentagesRow">false</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+        <panel>
+      <title>Big Dog</title>
+      <table>
+        <title>Anyone Over 10k point should get an Big Dog badge</title>
+        <search>
+          <query>index=scoreboard user!=admin 
+| lookup ctf_users Username as user 
+| eval Team=if(Team != "", Team, DisplayUsername) 
+| eval Team=if(Team != "", Team, Username) 
+| eval Team=if(Team != "", Team, user) 
+| stats max(BasePointsAwarded) as BasePoints max(SpeedBonusAwarded) as BonusPoints max(AdditionalBonusAwarded) as AdditionalBonusPoints sum(Penalty) as Penalty by Team, Number 
+| eval BasePoints = coalesce(BasePoints,0)
+| eval BonusPoints = coalesce(BonusPoints,0)
+| eval AdditionalBonusPoints = coalesce(AdditionalBonusPoints,0)
+| eval Penalty = coalesce(Penalty,0)
+| eval Score = BasePoints + BonusPoints + AdditionalBonusPoints - Penalty 
+| stats sum(BasePoints) as BasePoints sum(BonusPoints) as BonusPoints sum(AdditionalBonusPoints) as AdditionalBonusPoints sum(Penalty) as Penalty sum(Score) as Score by Team 
+| search Score >=10000
+| sort - Score 
+| eventstats count as totalcount 
+| streamstats current=f count as currentcount 
+| eval Rank=currentcount+1 | fields Rank Team Score
+| eval RankText="# " . Rank . ": "
+| eval TeamRank=RankText . Team
+| table TeamRank Score
+| rename TeamRank AS "Rank: Team"</query>
+          <earliest>0</earliest>
+          <latest>now</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">20</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="percentagesRow">false</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+  </row>
+</dashboard>

@@ -1,0 +1,441 @@
+[]
+access = read : [ admin, ctf_admin, ctf_answers_service ], write : [ admin, ctf_admin ]
+export = none
+version = 6.4.3
+modtime = 1473812533.924016000
+
+[eventtypes]
+export = system
+
+[props]
+export = system
+
+[transforms]
+export = system
+
+[lookups]
+export = system
+
+[viewstates]
+access = read : [ * ], write : [ * ]
+export = system
+
+[collections/ctf_answers]
+access = read : [ admin, ctf_admin, ctf_answers_service ], write : [ admin, ctf_admin, ctf_answers_service ]
+owner = admin
+version = 6.4.0
+modtime = 1469214711.818757000
+
+[transforms/ctf_answers]
+access = read : [ admin, ctf_admin, ctf_answers_service ], write : [ admin, ctf_admin, ctf_answers_service ]
+export = system
+owner = admin
+version = 6.4.0
+modtime = 1471982755.082588000
+
+[inputs/monitor%3A%2F%2F%2FUsers%2Fdherrald%2Fsplk%2Fsplunk-6.4%2Fvar%2Flog%2Fscoreboard%2Fscoreboard_admin.log]
+owner = admin
+version = 6.4.0
+modtime = 1471980636.938937000
+
+[props/scoreboard_admin]
+owner = admin
+version = 6.4.0
+modtime = 1471980621.682971000
+
+[indexes/scoreboard_admin]
+owner = admin
+version = 6.4.0
+modtime = 1471980577.343059000
+
+[app/ui]
+version = 6.4.3
+modtime = 1474665207.199338000
+
+[app/launcher]
+version = 6.4.3
+modtime = 1474665207.201390000
+
+[app/package/check_for_updates]
+version = 6.4.3
+modtime = 1474665207.203970000
+
+[views/scoreboard_health]
+owner = admin
+version = 6.5.1
+modtime = 1484795911.576557000
+
+[nav/default]
+version = 7.0.0
+modtime = 1521474323.195211000
+
+[views/standings]
+owner = admin
+version = 6.4.0
+modtime = 1472068605.271584000
+
+[views/adjust_score]
+version = 6.6.3
+modtime = 1506393433.091051000
+
+[views/scoreboard_admin_error]
+owner = admin
+version = 6.5.1
+modtime = 1484794318.653865000
+
+[views/adjust_score_result]
+owner = admin
+version = 6.4.0
+modtime = 1473718599.441053000
+
+[views/q__a]
+owner = admin
+version = 6.5.2
+modtime = 1491696729.347552000
+
+[views/all_questions_by_team]
+owner = admin
+version = 6.5.0
+modtime = 1481661482.290107000
+
+[views/questions]
+owner = admin
+version = 6.4.3
+modtime = 1474159854.627398000
+
+[savedsearches/Not%20Answered%20or%20Never%20Correctly%20Answered%20Questions]
+access = read : [ admin, ctf_admin ], write : [ admin, ctf_admin ]
+export = none
+owner = admin
+version = 6.5.2
+modtime = 1491700186.506146000
+
+[views/current_happenings]
+owner = admin
+version = 6.4.3
+modtime = 1474381598.385785000
+
+[views/geo_scoring_info]
+owner = admin
+version = 6.6.3
+modtime = 1504725672.708715000
+
+[views/users]
+owner = admin
+version = 6.5.0
+modtime = 1478876555.453769000
+
+[views/competitors]
+owner = admin
+version = 6.5.0
+modtime = 1479344315.001539000
+
+[views/all_team_scoring]
+access = read : [ admin, ctf_admin, ctf_competitor ], write : [ admin, ctf_admin ]
+export = system
+owner = admin
+version = 6.5.0
+modtime = 1481659230.514563000
+
+[savedsearches/Load%20sample%20users%2Fteams]
+access = read : [ admin, ctf_admin ], write : [ admin, ctf_admin ]
+export = none
+owner = admin
+version = 6.5.2
+modtime = 1491700182.476918000
+
+[savedsearches/Load%20sample%20questions]
+access = read : [ admin, ctf_admin ], write : [ admin, ctf_admin ]
+export = none
+owner = admin
+version = 6.5.2
+modtime = 1491700177.501342000
+
+[savedsearches/Load%20sample%20answers]
+access = read : [ admin, ctf_admin ], write : [ admin, ctf_admin ]
+export = none
+owner = admin
+version = 6.5.1
+modtime = 1484778706.196431000
+
+[views/load_sample_answers]
+owner = admin
+version = 6.5.1
+modtime = 1484782839.693856000
+
+[views/load_sample_questions]
+access = read : [ admin, ctf_admin, ctf_answers_service ], write : [ admin, ctf_admin ]
+export = none
+owner = admin
+version = 6.5.1
+modtime = 1484782939.446460000
+
+[views/load_sample_usersteams]
+access = read : [ admin, ctf_admin, ctf_answers_service ], write : [ admin, ctf_admin ]
+export = none
+owner = admin
+version = 6.5.1
+modtime = 1484783772.291827000
+
+[views/somafm_music_to_hack_by]
+owner = admin
+version = 6.5.2
+modtime = 1490127745.984756000
+
+[views/final_countdown]
+access = read : [ admin, ctf_admin, ctf_answers_service ], write : [ admin, ctf_admin ]
+export = none
+owner = admin
+version = 6.5.2
+modtime = 1490127606.837769000
+
+[transforms/ctf_hints]
+access = read : [ admin, ctf_admin, ctf_answers_service ], write : [ admin, ctf_admin ]
+export = system
+owner = nobody
+version = 6.5.2
+modtime = 1490225435.417705000
+
+[savedsearches/Generate%20Latest%20Scores%20and%20Ranks]
+version = 6.5.2
+modtime = 1491275951.766843000
+
+[views/load_sample_hints]
+access = read : [ admin, ctf_admin, ctf_answers_service ], write : [ admin, ctf_admin ]
+export = none
+owner = admin
+version = 6.5.2
+modtime = 1491699651.701247000
+
+[savedsearches/Load%20sample%20hints]
+access = read : [ admin, ctf_admin ], write : [ admin, ctf_admin ]
+export = none
+owner = admin
+version = 6.5.2
+modtime = 1491700172.013399000
+
+[savedsearches/Load%20sample%20hint%20entitlements]
+access = read : [ admin, ctf_admin ], write : [ admin, ctf_admin ]
+export = none
+owner = admin
+version = 6.6.3
+modtime = 1503541327.597362000
+
+[views/load_sample_hint_entitlements]
+access = read : [ admin, ctf_admin, ctf_answers_service ], write : [ admin, ctf_admin ]
+export = none
+owner = admin
+version = 6.5.3
+modtime = 1493234056.532502000
+
+[views/question_timeanswer_densities]
+version = 6.6.2
+modtime = 1503113432.514204000
+
+[views/streaks_and_penalties]
+version = 6.5.3
+modtime = 1493235536.849637000
+
+[savedsearches/Backup%20KV]
+access = read : [ admin, ctf_admin ]
+export = none
+owner = admin
+version = 6.5.3
+modtime = 1494560930.954971000
+
+[savedsearches/KV%20Backup%20History]
+access = read : [ admin, ctf_admin ], write : [ admin, ctf_admin ]
+export = none
+owner = admin
+version = 6.5.3
+modtime = 1494561414.892921000
+
+[views/kv_backup_history]
+access = read : [ admin, ctf_admin ], write : [ admin, ctf_admin ]
+owner = admin
+version = 6.5.3
+modtime = 1494575060.406661000
+
+[macros/stagecontent_v1]
+access = read : [ admin, ctf_admin ], write : [ admin, ctf_admin ]
+export = none
+owner = admin
+version = 6.5.3
+modtime = 1494571897.736046000
+
+[savedsearches/Load%20staged%20answers]
+access = read : [ admin, ctf_admin ], write : [ admin, ctf_admin ]
+export = none
+owner = admin
+version = 6.5.3
+modtime = 1494573322.714615000
+
+[views/load_staged_answers]
+access = read : [ admin, ctf_admin ], write : [ admin, ctf_admin ]
+export = none
+owner = admin
+version = 6.5.3
+modtime = 1494573398.825041000
+
+[savedsearches/Load%20staged%20questions]
+access = read : [ admin, ctf_admin ], write : [ admin, ctf_admin ]
+export = none
+owner = admin
+version = 6.5.3
+modtime = 1494573191.777437000
+
+[savedsearches/Load%20staged%20hints]
+access = read : [ admin, ctf_admin ], write : [ admin, ctf_admin ]
+export = none
+owner = admin
+version = 6.5.3
+modtime = 1494573333.323900000
+
+[savedsearches/Load%20staged%20users]
+access = read : [ admin, ctf_admin ], write : [ admin, ctf_admin ]
+export = none
+owner = admin
+version = 6.5.3
+modtime = 1494573305.158935000
+
+[views/load_staged_questions]
+access = read : [ admin, ctf_admin ], write : [ admin, ctf_admin ]
+export = none
+owner = admin
+version = 6.5.3
+modtime = 1494573506.248337000
+
+[views/load_staged_users]
+access = read : [ admin, ctf_admin ], write : [ admin, ctf_admin ]
+export = none
+owner = admin
+version = 6.5.3
+modtime = 1494573554.574835000
+
+[views/stage_production_content]
+owner = admin
+version = 6.6.3
+modtime = 1503515987.279485000
+
+[views/load_staged_hints]
+access = read : [ admin, ctf_admin ], write : [ admin, ctf_admin ]
+export = none
+owner = admin
+version = 6.5.3
+modtime = 1494575814.117639000
+
+[views/event_info]
+version = 6.6.3
+modtime = 1503628612.753667000
+
+[transforms/currentscore]
+version = 6.6.2
+modtime = 1502629828.376283000
+access = read : [ admin, ctf_admin, ctf_answers_service ], write : [ admin, ctf_admin, ctf_answers_service ]
+export = none
+owner = admin
+
+[savedsearches/Load%20sample%20badges]
+access = read : [ admin, ctf_admin ], write : [ admin, ctf_admin ]
+export = none
+owner = admin
+version = 6.6.3
+modtime = 1503521358.726232000
+
+[views/load_sample_badges]
+access = read : [ admin, ctf_admin, ctf_answers_service ], write : [ admin, ctf_admin ]
+export = none
+owner = admin
+version = 6.6.3
+modtime = 1503540590.782860000
+
+[savedsearches/Load%20sample%20badge%20entitlements]
+access = read : [ admin, ctf_admin ], write : [ admin, ctf_admin ]
+export = none
+owner = admin
+version = 6.6.3
+modtime = 1503541500.326578000
+
+[views/load_sample_badge_entitlements]
+access = read : [ admin, ctf_admin, ctf_answers_service ], write : [ admin, ctf_admin ]
+export = none
+owner = admin
+version = 6.6.3
+modtime = 1503541029.876886000
+
+[savedsearches/Load%20staged%20badges]
+access = read : [ admin, ctf_admin ], write : [ admin, ctf_admin ]
+export = none
+owner = admin
+version = 6.6.3
+modtime = 1503591618.513497000
+
+[views/load_staged_badges]
+access = read : [ admin, ctf_admin ], write : [ admin, ctf_admin ]
+export = none
+owner = admin
+version = 6.6.3
+modtime = 1503591775.723839000
+
+[views/assign_ebadges]
+owner = admin
+version = 6.6.3
+modtime = 1506351908.551106000
+
+[views/user_investigator]
+version = 6.6.2
+modtime = 1504169702.079132000
+
+[views/quick_team_view]
+access = read : [ * ], write : [ admin, ctf_admin ]
+export = none
+owner = admin
+version = 6.6.3
+modtime = 1506390846.566122000
+
+[views/cumulative_score_detail]
+access = read : [ admin, ctf_admin ], write : [ admin, ctf_admin ]
+export = none
+owner = admin
+version = 6.6.3
+modtime = 1507297662.575002000
+
+[views/podium]
+owner = admin
+version = 6.6.3
+modtime = 1505154635.868900000
+
+[html/podium_html]
+owner = admin
+version = 6.6.3
+modtime = 1505154891.714541000
+
+[views/badges_by_question_group]
+owner = admin
+version = 6.6.3
+modtime = 1505656000.634996000
+
+[views/manual_badge_search]
+owner = admin
+version = 6.6.3
+modtime = 1506396352.720137000
+
+[savedsearches/BigDog%20Alert]
+owner = fwijnholds
+version = 6.6.3
+modtime = 1506397489.923396000
+
+[views/question_access]
+access = read : [ admin, ctf_admin ], write : [ admin, ctf_admin ]
+export = none
+owner = admin
+version = 7.0.0
+modtime = 1521474243.307387000
+
+[views/time_setup]
+access = read : [ admin, ctf_admin ], write : [ admin, ctf_admin ]
+export = none
+owner = nobody
+version = 7.0.0
+modtime = 1521474293.813830000
+

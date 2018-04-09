@@ -1,0 +1,18 @@
+<dashboard>
+  <label>Q &amp; A</label>
+  <row>
+    <panel>
+      <table>
+        <title>You got Questions? We got Answers.</title>
+        <search>
+          <query>|inputlookup ctf_questions | append [|inputlookup ctf_answers] | eval NiceStartTime = strftime(StartTime, "%+") |  eval NiceEndTime = strftime(EndTime, "%+") | stats last(Question) as Queston last(Answer) as Answer last(BasePoints) as BasePoints last(NiceStartTime) as NiceStartTime last(NiceEndTime) as NiceEndTime  by Number |  sort Number</query>
+        </search>
+        <option name="wrap">true</option>
+        <option name="rowNumbers">false</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">cell</option>
+        <option name="count">50</option>
+      </table>
+    </panel>
+  </row>
+</dashboard>

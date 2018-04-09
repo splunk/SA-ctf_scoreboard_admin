@@ -1,0 +1,5 @@
+Password,Event,DisplayUsername,Username,ScoringUrl,SearchUrl,Email,Team
+,sample_shindig,Tommy Tiertwo,user1,https://localhost:8000,https://localhost:8000,,BOTS slayer
+,sample_shindig,Tammy Tierthree,user2,https://localhost:8000,https://localhost:8000,,Slayer haters
+,sample_shindig,Ronnie Responder,user3,https://localhost:8000,https://localhost:8000,,Slayer haters
+,sample_shindig,Sammy Soclead,user4,https://localhost:8000,https://localhost:8000,,""

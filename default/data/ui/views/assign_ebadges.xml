@@ -1,0 +1,74 @@
+<form script="all_ebadges.js" stylesheet="all_ebadges.css">
+  <label>Manually Assign eBadges</label>
+  <fieldset submitButton="false" autoRun="false">
+    <input type="dropdown" token="ebadge" searchWhenChanged="true">
+      <label>eBadge to Assign</label>
+      <fieldForLabel>num_and_name</fieldForLabel>
+      <fieldForValue>BadgeNumber</fieldForValue>
+      <search>
+        <query>| inputlookup ctf_badges | eval num_and_name=BadgeNumber . ". " . BadgeName</query>
+      </search>
+    </input>
+    <input type="dropdown" token="recipient">
+      <label>Team / User</label>
+      <delimiter> </delimiter>
+      <fieldForLabel>label_field</fieldForLabel>
+      <fieldForValue>value_field</fieldForValue>
+      <search>
+        <query>| inputlookup ctf_users 
+| eval label_field=DisplayUsername . " (" . Username . ", " . Team . ")" | eval value_field = Username
+| append 
+    [| inputlookup ctf_users 
+    | eval label_field="Team " . Team | eval value_field = Team] 
+| where label_field != "Team " 
+| dedup label_field</query>
+      </search>
+    </input>
+    <input type="text" token="notes">
+      <label>Notes</label>
+      <default></default>
+    </input>
+    <input type="dropdown" token="award_to_entire_team" searchWhenChanged="false">
+      <label></label>
+      <choice value="0">Assign to user only.</choice>
+      <choice value="1">Assign to user and all their teammates.</choice>
+      <default>0</default>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <html>
+        <input id="diy_submit" type="button" value="Assign eBadge"/>
+        <h3>Current Assignments for this eBadge</h3>
+        <div id="badge_div"/>
+      </html>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Awarded to all members of the team that correctly answers the first 1K point question of the event.</title>
+      <table>
+        <search>
+          <query>earliest=0 index="scoreboard_admin" "result=Correct" Number!=1 
+| search  "result=Correct" Number!=1 BasePointsAwarded=1000 Result=Correct 
+| search  `get_user_info`
+| lookup ctf_badge_entitlements user AS user OUTPUT BadgeNumber 
+| eval BadgeNumber=mvfilter(match(BadgeNumber, "^18$$" )) 
+| eval Awarded=if(mvcount(BadgeNumber) &gt; 0, 1, 0) 
+| tail 1 
+| table user DisplayUsername Team  Awarded</query>
+          <earliest>0</earliest>
+          <latest>now</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">100</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="percentagesRow">false</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+  </row>
+</form>

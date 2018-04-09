@@ -1,0 +1,17 @@
+<form script="instantiate_countdown.js" stylesheet="countdown.css">
+  <label>Countdown</label>
+  <row>
+    <panel>
+      <html>
+        <div id="clock">
+        </div>
+        <div id="showtimepickerdiv" class="timepickerdiv">
+        Select end time: <input type="text" style="width: 70px;" id="timepicker" value="" />
+        </div>
+        <div id="hidetimepickerdiv" class="timepickerdiv">
+        </div>
+        <button id="settings">Settings</button>
+      </html>
+    </panel>
+  </row>
+</form>

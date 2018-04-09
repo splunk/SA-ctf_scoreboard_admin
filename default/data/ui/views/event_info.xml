@@ -1,0 +1,25 @@
+<dashboard>
+  <label>Helpful Links</label>
+  <row>
+    <panel>
+      <html>
+
+<h1>
+	During the competition, you may want to open these dashboards in tabs.
+</h1>
+<style>.btn-primary { margin: 5px 10px 5px 0; }</style>
+<p>
+<a href="/app/SA-ctf_scoreboard/AllScores" class="btn btn-primary" target="_blank">All Scores</a>
+<a href="/app/SA-ctf_scoreboard/top_10_teams" class="btn btn-primary" target="_blank">Top 10 Teams</a>
+<a href="/app/SA-ctf_scoreboard/event_activity" class="btn btn-primary" target="_blank">CTF Activity</a>
+<a href="/app/SA-ctf_scoreboard/score_timeline" class="btn btn-primary" target="_blank">Score timeline</a>
+<a href="/app/SA-ctf_scoreboard/question_timeanswer_densities" class="btn btn-primary" target="_blank">Question and Answer Density</a>
+<a href="/app/SA-ctf_scoreboard/ebadges_by_team" class="btn btn-primary" target="_blank">eBadges by Team</a>
+<a href="somafm_music_to_hack_by" class="btn btn-primary" target="_blank">Defcon Music for Ambiance</a>
+<a href="countdown" class="btn btn-primary" target="_blank">Timer for event countdown</a>
+</p>
+
+</html>
+    </panel>
+  </row>
+</dashboard>

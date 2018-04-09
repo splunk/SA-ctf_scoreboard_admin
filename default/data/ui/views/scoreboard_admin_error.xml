@@ -1,0 +1,10 @@
+<dashboard>
+  <label>Scoreboard Error</label>
+  <row>
+    <panel>
+      <html>
+      An error has occured. The most common cause is that YOU ARE A hax0r!!
+    </html>
+    </panel>
+  </row>
+</dashboard>

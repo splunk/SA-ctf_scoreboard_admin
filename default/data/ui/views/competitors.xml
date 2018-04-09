@@ -1,0 +1,23 @@
+<dashboard>
+  <label>Competitors</label>
+  <row>
+    <panel>
+      <title>Competitors</title>
+      <table>
+        <search>
+          <query>| inputlookup ctf_users |  rex field=Username "^user(?&lt;UserNumber&gt;\d+)$" | sort UserNumber | fields - UserNumber</query>
+          <earliest>$earliest$</earliest>
+          <latest>$latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">20</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">cell</option>
+        <option name="percentagesRow">false</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+  </row>
+</dashboard>
