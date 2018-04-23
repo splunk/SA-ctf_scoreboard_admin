@@ -17,7 +17,7 @@ http://creativecommons.org/publicdomain/zero/1.0/.
 ### Special Copyright/License Notes
 
 This repository includes the following open source components:
- * http://jqueryui.com/
+ * [jquery UI](http://jqueryui.com/)
  * [jQuery timepicker addon By: Trent Richardson](http://trentrichardson.com)
  * [The Final Countdown for jQuery v2.1.0](http://hilios.github.io/jQuery.countdown/)
  * [jQuery UI Timepicker Copyright 2010-2013](http://fgelinas.com/code/timepicker)
