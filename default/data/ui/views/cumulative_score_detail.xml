@@ -41,6 +41,7 @@
           <query>
 
 earliest=0 index=scoreboard user!=admin `get_user_info` `validateevents`
+| dedup vcode
 | search Team="$team$"
 | eventstats min(eval(if(BasePointsAwarded&gt;0,_time,null))) as FC by Team, Number 
 | eventstats min(eval(if(AdditionalBonusAwarded&gt;0,_time,null))) as FAB by Team, Number 
