@@ -1,35 +1,41 @@
-require(["jquery", 
-         "splunkjs/ready!", 
-         "splunkjs/mvc/simplexml/ready!", 
-         "splunkjs/mvc", 
-         "/static/app/SA-ctf_scoreboard_admin/jquery.countdown.js", 
-         "/static/app/SA-ctf_scoreboard_admin/jquery.ui.timepicker.js" ], function($, mvc){
+require(["jquery",
+         "splunkjs/mvc/utils",
+         "splunkjs/mvc/searchmanager",
+         "/static/app/SA-ctf_scoreboard_admin/jquery.countdown.js",
+         "splunkjs/ready!",
+         "splunkjs/mvc/simplexml/ready!"], function($, utils, SearchManager){
 
-  $('#timepicker').timepicker( {
-  	showPeriod: true,
-    showLeadingZero: true
-    } );
+  // Detemine competition end time and start the clock.
+  var sm = new SearchManager({
+    "id": 'getEndTimeSM',
+    "cancelOnUnload": true,
+    "latest_time": "",
+    "status_buckets": 0,
+    "earliest_time": "0",
+    "search": "|inputlookup ctf_questions | stats max(EndTime) as EndTime | fields + EndTime",
+    "app": utils.getCurrentApp(),
+    "preview": true,
+    "runWhenTimeIsUndefined": false,
+    "autostart": true
+    }, { tokens: true, tokenNamespace: "submitted" });
 
-  $('#timepicker').on("change", function () {
-    var rightnow = new Date();
-    var endDateTime = $('#timepicker').timepicker('getTimeAsDate')
-    endDateTime.setFullYear(rightnow.getFullYear())
-    endDateTime.setMonth(rightnow.getMonth())
-    endDateTime.setDate(rightnow.getDate())
-
-    $('#clock').countdown(endDateTime, function(event) {
-      $(this).html(event.strftime('%H:%M:%S'));
-    });
-  });
-
-  $("#settings").on("click", function () {
-        $("#showtimepickerdiv, #hidetimepickerdiv").toggle();
+    sm.on('search:done', function(properties) {
+        var searchName = properties.content.request.label
+        if (properties.content.resultCount == 0) {
+            console.log(searchName, "gave no results, so timer cannot be started.", properties)
+        } else {
+            var results = splunkjs.mvc.Components.getInstance(searchName).data('results', { output_mode: 'json', count: 0 });
+            results.on("data", function(properties) {
+                var searchName = properties.attributes.manager.id
+                var data = properties.data().results
+                epoch = parseInt(data[0]['EndTime'],10);
+                var d = new Date(0);
+                d.setUTCSeconds(epoch);
+                // Instantiate the countdown timer with the time of the last question in ctf_questions.
+                $('#clock').countdown(d, function(event) {
+                    $(this).html(event.strftime('%D:%H:%M:%S'));
+                  });
+            });
+        };
     });
 });
-
-
-
-
-
-
-

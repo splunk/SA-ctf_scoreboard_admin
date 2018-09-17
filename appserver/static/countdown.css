@@ -1,26 +1,18 @@
 #clock{
-	background: #000000;
-	color: #ffffff;
-	height: 400px;
-	line-height: 400px;
-	width=100%;
-	text-align: center;
-	font-family: sans-serif;
-	font-size: 15vw;
-}
-
-.timepickerdiv{
     background: #000000;
-	color: #ffffff;
-	height: 150px;
-	width=100%;
-	text-align: center;
-	font-family: sans-serif;
+    color: #ffffff;
+    height: 400px;
+    line-height: 400px;
+    width=100%;
+    text-align: center;
+    font-size: 15vw;
 }
 
-#hidetimepickerdiv{
-    display: none;
-    height: 0px;
+#clock-text{
+    background: #000000;
+    color: #ffffff;
+    text-align: center;
+    font-size: 12px;
+    line-height: 12px;
+    font-weight:bold;
 }
-
-
