@@ -1,0 +1,92 @@
+<form>
+  <label>User Activity</label>
+  <fieldset submitButton="false" autoRun="true">
+    <input type="time" token="field1">
+      <label></label>
+      <default>
+        <earliest>-24h@h</earliest>
+        <latest>now</latest>
+      </default>
+    </input>
+    <input type="multiselect" token="team" searchWhenChanged="true">
+      <label>Teams</label>
+      <search>
+        <query>| inputlookup ctf_users 
+| eval Team=if(Team != "", Team, DisplayUsername) 
+| eval Team=if(Team != "", Team, Username) 
+| eval Team=if(Team != "", Team, user) | dedup Team</query>
+        <earliest>0</earliest>
+      </search>
+      <fieldForLabel>Team</fieldForLabel>
+      <fieldForValue>Team</fieldForValue>
+      <delimiter> OR </delimiter>
+      <choice value="*">All</choice>
+      <default>*</default>
+      <initialValue>*</initialValue>
+    </input>
+    <input type="multiselect" token="number" searchWhenChanged="true">
+      <label>Question Number</label>
+      <search>
+        <query>| inputlookup ctf_answers
+        | Dedup Number</query>
+        <earliest>0</earliest>
+      </search>
+      <fieldForLabel>Number</fieldForLabel>
+      <fieldForValue>Number</fieldForValue>
+      <delimiter> OR </delimiter>
+      <choice value="*">All</choice>
+      <default>*</default>
+      <initialValue>*</initialValue>
+    </input>
+    <input type="dropdown" token="myuser" searchWhenChanged="true">
+      <label>User</label>
+      <fieldForLabel>User</fieldForLabel>
+      <fieldForValue>User</fieldForValue>
+      <choice value="*">All</choice>
+      <default>*</default>
+      <initialValue>*</initialValue>
+      <search>
+        <query>| inputlookup ctf_users 
+| eval User=if(DisplayUsername="", Username, DisplayUsername) | dedup User | sort User</query>
+      </search>
+      <prefix>"</prefix>
+      <suffix>"</suffix>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <table>
+        <search>
+          <query>index="scoreboard_admin"  
+| lookup ctf_users Username as user 
+| eval Team=if(Team != "", Team, DisplayUsername) 
+| eval Team=if(Team != "", Team, Username) 
+| eval Team=if(Team != "", Team, user)
+| eval User=if(DisplayUsername="", Username, DisplayUsername)
+| eval Question= if(Result="Hint", Question + " -- Hint #" + HintNumber + ": " + Hint, Question)
+| eval ScoreImpact=BasePointsAwarded+SpeedBonusAwarded+AdditionalBonusAwarded-Penalty
+| search Team=$team$ Number=$number$ User=$myuser$ 
+| table _time, Result, ScoreImpact, Number, Question , Answer, AnswerOfficial, DisplayUsername, Team | sort - _time</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">20</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="percentagesRow">false</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+        <format type="color" field="Result">
+          <colorPalette type="map">{"Incorrect":#D93F3C,"Correct":#65A637,"Hint":#6DB7C6,"Bonus":#6A5C9E}</colorPalette>
+        </format>
+        <format type="color" field="ScoreImpact">
+          <colorPalette type="list">[#3863A0,#F7BC38,#ED8440,#D93F3C]</colorPalette>
+          <scale type="threshold">0,500,1000</scale>
+        </format>
+      </table>
+    </panel>
+  </row>
+</form>

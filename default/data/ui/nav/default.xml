@@ -42,6 +42,7 @@
   </collection>
   <collection label="Scoring Analytics">
     <view name="user_investigator"/>
+    <view name="user_activity"/>
     <view name="streaks_and_penalties" />
     <view name="geo_scoring_info" />
     <view name="all_questions_by_team"/>
