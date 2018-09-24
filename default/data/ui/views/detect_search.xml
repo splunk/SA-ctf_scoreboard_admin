@@ -1,0 +1,24 @@
+<dashboard>
+  <label>Detect Competitors Running Search</label>
+  <row>
+    <panel>
+      <event>
+        <search>
+          <query>index=_internal search sourcetype=splunk_web_access uri_path="*/search" status=200 user!=admin</query>
+          <earliest>0</earliest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">20</option>
+        <option name="list.drilldown">none</option>
+        <option name="list.wrap">1</option>
+        <option name="maxLines">5</option>
+        <option name="raw.drilldown">full</option>
+        <option name="rowNumbers">0</option>
+        <option name="table.drilldown">all</option>
+        <option name="table.sortDirection">asc</option>
+        <option name="table.wrap">1</option>
+        <option name="type">list</option>
+      </event>
+    </panel>
+  </row>
+</dashboard>

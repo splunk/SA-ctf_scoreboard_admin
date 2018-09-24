@@ -49,6 +49,8 @@
     <view name="geo_scoring_info" />
     <view name="all_questions_by_team"/>
     <view name="cumulative_score_detail" />
+    <view name="detect_collect" />
+    <view name="detect_search" />
     <collection label="Beta Analytics">
       <view name="answers_by_user" />
       <view name="timebased_question_and_answering_palette" />
