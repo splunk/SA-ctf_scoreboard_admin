@@ -66,8 +66,8 @@ version = 6.5.1
 modtime = 1484795911.576557000
 
 [nav/default]
-version = 7.0.0
-modtime = 1521474323.195211000
+version = 7.2.3
+modtime = 1548948568.719532000
 
 [views/standings]
 owner = admin
@@ -240,8 +240,8 @@ modtime = 1493235536.849637000
 access = read : [ admin, ctf_admin ]
 export = none
 owner = admin
-version = 6.5.3
-modtime = 1494560930.954971000
+version = 7.2.3
+modtime = 1548989844.395261000
 
 [savedsearches/KV%20Backup%20History]
 access = read : [ admin, ctf_admin ], write : [ admin, ctf_admin ]
@@ -446,4 +446,30 @@ modtime = 1536584953.063402000
 [views/countdown]
 version = 7.1.3
 modtime = 1537216167.568422000
+
+[views/load_sample_user_agreements]
+access = read : [ admin, ctf_admin, ctf_answers_service ], write : [ admin, ctf_admin ]
+export = system
+owner = admin
+version = 7.2.3
+modtime = 1548947703.942672000
+
+[savedsearches/Load%20sample%20User%20Agreements]
+access = read : [ admin, ctf_admin ], write : [ admin, ctf_admin ]
+export = system
+owner = admin
+version = 7.2.3
+modtime = 1548947571.624958000
+
+[savedsearches/Load%20staged%20User%20Agreements]
+access = read : [ admin, ctf_admin ], write : [ admin, ctf_admin ]
+export = none
+owner = admin
+version = 7.2.3
+modtime = 1548948361.180287000
+
+[views/load_staged_user_agreements]
+owner = admin
+version = 7.2.3
+modtime = 1548948529.563593000
 

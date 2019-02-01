@@ -1,0 +1,11 @@
+<dashboard>
+  <label>Load staged User Agreements</label>
+  <row>
+    <panel>
+      <table>
+        <search ref="Load staged User Agreements"></search>
+        <option name="drilldown">none</option>
+      </table>
+    </panel>
+  </row>
+</dashboard>

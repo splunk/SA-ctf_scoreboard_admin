@@ -1,0 +1,12 @@
+<dashboard>
+  <label>Load sample User Agreements</label>
+  <row>
+    <panel>
+      <table>
+        <title>Results</title>
+        <search ref="Load sample User Agreements"></search>
+        <query>eval WARNING=$WARNING$</query>
+      </table>
+    </panel>
+  </row>
+</dashboard>
