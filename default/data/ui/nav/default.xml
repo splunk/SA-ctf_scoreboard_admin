@@ -13,7 +13,7 @@
     <a href='/app/lookup_editor/lookup_edit?owner=nobody&amp;namespace=SA-ctf_scoreboard&amp;lookup=ctf_badges&amp;type=kv'>Edit eBadges</a>
     <a href='/app/lookup_editor/lookup_edit?owner=nobody&amp;namespace=SA-ctf_scoreboard&amp;lookup=ctf_badge_entitlements&amp;type=kv'>Edit eBadge Entitlements</a>
     <a href='/app/lookup_editor/lookup_edit?owner=nobody&amp;namespace=SA-ctf_scoreboard&amp;lookup=ctf_stealth&amp;type=kv'>Edit Stealth Mode Teams</a>
-    <a href='/app/lookup_editor/lookup_edit?owner=nobody&amp;namespace=SA-ctf_scoreboard&amp;lookup=ctf_eulas&amp;type=kv'>Edit User License Agrreements</a>
+    <a href='/app/lookup_editor/lookup_edit?owner=nobody&amp;namespace=SA-ctf_scoreboard&amp;lookup=ctf_eulas&amp;type=kv'>Edit User License Agreements</a>
     <a href='/app/lookup_editor/lookup_edit?owner=nobody&amp;namespace=SA-ctf_scoreboard&amp;lookup=ctf_eulas_accepted&amp;type=kv'>Edit Accepted User License Agreements</a>
 
 	  
