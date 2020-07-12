@@ -60,6 +60,7 @@
     <collection label="Beta Analytics">
       <view name="answers_by_user" />
       <view name="timebased_question_and_answering_palette" />
+      <view name="question_difficulty_analytics" />
     </collection>
   </collection>
   <view name="scoreboard_health" />

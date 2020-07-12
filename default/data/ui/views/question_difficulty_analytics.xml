@@ -1,0 +1,113 @@
+<dashboard theme="dark">
+  <label>Question Difficulty Analytics</label>
+  <row>
+    <panel>
+      <title>Which Questions have been Answered Correctly?</title>
+      <table>
+        <title>VE: Very Easy. E: Easy. M: Medium. H: Hard. VH: Very Hard. T: Test</title>
+        <search>
+          <query>index="scoreboard_admin" 
+| lookup ctf_users Username as user 
+| eval Team=if(Team != "", Team, DisplayUsername) 
+| eval Team=if(Team != "", Team, Username) 
+| eval Team=if(Team != "", Team, user) 
+| search Team="*" Number=* NOT Result=Bonus NOT Result=Hint* NOT user=admin 
+| eval Result=if(Result=="Hint", "Hint"+HintNumber, Result) 
+| stats count(eval(Result="Correct")) AS Correct values(BasePointsAvailable) as Points by Number 
+| inputlookup ctf_questions append=t 
+| fillnull value=0 Correct 
+| stats sum(Correct) as CorrectAnswer,values(Points) as Points by Number 
+| where (Number&gt;99 AND Number&lt;120) 
+| eval Difficulty=case(Points=50,"T",Points=100,"VE",Points=250,"E",Points=500,"M",Points=1000,"H",Points=1500,"VH") 
+| eval Number="Q"+Number+":"+Difficulty 
+| fields - Difficulty,Points 
+| transpose 0 
+| rename row* as * 
+| append 
+    [ search index="scoreboard_admin" 
+    | lookup ctf_users Username as user 
+    | eval Team=if(Team != "", Team, DisplayUsername) 
+    | eval Team=if(Team != "", Team, Username) 
+    | eval Team=if(Team != "", Team, user) 
+    | search Team="*" Number=* NOT Result=Bonus NOT Result=Hint* NOT user=admin 
+    | eval Result=if(Result=="Hint", "Hint"+HintNumber, Result) 
+    | stats count(eval(Result="Correct")) AS Correct values(BasePointsAvailable) as Points by Number 
+    | inputlookup ctf_questions append=t 
+    | fillnull value=0 Correct 
+    | stats sum(Correct) as CorrectAnswer,values(Points) as Points by Number 
+    | where (Number&gt;121 AND Number&lt;205) 
+    | eval Difficulty=case(Points=50,"T",Points=100,"VE",Points=250,"E",Points=500,"M",Points=1000,"H",Points=1500,"VH") 
+    | eval Number="Q"+Number+":"+Difficulty 
+    | fields - Difficulty,Points 
+    | transpose 0 
+    | rename row* as *] 
+| append 
+    [ search index="scoreboard_admin" 
+    | lookup ctf_users Username as user 
+    | eval Team=if(Team != "", Team, DisplayUsername) 
+    | eval Team=if(Team != "", Team, Username) 
+    | eval Team=if(Team != "", Team, user) 
+    | search Team="*" Number=* NOT Result=Bonus NOT Result=Hint* NOT user=admin 
+    | eval Result=if(Result=="Hint", "Hint"+HintNumber, Result) 
+    | stats count(eval(Result="Correct")) AS Correct values(BasePointsAvailable) as Points by Number 
+    | inputlookup ctf_questions append=t 
+    | fillnull value=0 Correct 
+    | stats sum(Correct) as CorrectAnswer,values(Points) as Points by Number 
+    | where (Number&gt;205 AND Number&lt;306) 
+    | eval Difficulty=case(Points=50,"T",Points=100,"VE",Points=250,"E",Points=500,"M",Points=1000,"H",Points=1500,"VH") 
+    | eval Number="Q"+Number+":"+Difficulty 
+    | fields - Difficulty,Points 
+    | transpose 0 
+    | rename row* as *] 
+| fields - column 
+| append 
+    [ search index="scoreboard_admin" 
+    | lookup ctf_users Username as user 
+    | eval Team=if(Team != "", Team, DisplayUsername) 
+    | eval Team=if(Team != "", Team, Username) 
+    | eval Team=if(Team != "", Team, user) 
+    | search Team="*" Number=* NOT Result=Bonus NOT Result=Hint* NOT user=admin 
+    | stats count(eval(Result="Correct")) AS Correct values(BasePointsAvailable) as Points by Number 
+    | inputlookup ctf_questions append=t 
+    | fillnull value=0 Correct 
+    | stats sum(Correct) as CorrectAnswer,values(Points) as Points by Number 
+    | where (Number&gt;306 AND Number&lt;327) 
+    | eval Difficulty=case(Points=50,"T",Points=100,"VE",Points=250,"E",Points=500,"M",Points=1000,"H",Points=1500,"VH") 
+    | eval Number="Q"+Number+":"+Difficulty 
+    | fields - Difficulty,Points 
+    | transpose 0 
+    | rename row* as *] 
+| fields - column 
+| append 
+    [ search index="scoreboard_admin" 
+    | lookup ctf_users Username as user 
+    | eval Team=if(Team != "", Team, DisplayUsername) 
+    | eval Team=if(Team != "", Team, Username) 
+    | eval Team=if(Team != "", Team, user) 
+    | search Team="*" Number=* NOT Result=Bonus NOT Result=Hint* NOT user=admin 
+    | stats count(eval(Result="Correct")) AS Correct values(BasePointsAvailable) as Points by Number 
+    | inputlookup ctf_questions append=t 
+    | fillnull value=0 Correct 
+    | stats sum(Correct) as CorrectAnswer,values(Points) as Points by Number 
+    | where (Number&gt;327 AND Number&lt;412) 
+    | eval Difficulty=case(Points=50,"T",Points=100,"VE",Points=250,"E",Points=500,"M",Points=1000,"H",Points=1500,"VH") 
+    | eval Number="Q"+Number+":"+Difficulty 
+    | fields - Difficulty,Points 
+    | transpose 0 
+    | rename row* as *] 
+| fields - column</query>
+          <earliest>0</earliest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">100</option>
+        <option name="dataOverlayMode">heatmap</option>
+        <option name="drilldown">none</option>
+        <option name="percentagesRow">false</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+  </row>
+</dashboard>
