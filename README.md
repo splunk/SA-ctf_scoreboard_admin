@@ -1,5 +1,7 @@
 # SA-ctf_scoreboard_admin
 
+NOTE: As of January 2022, this app has been deprecated. Please visit https://bots.splunk.com for hands-on experiences using Splunk security products. Splunk will no longer provide assistance or support for this app.
+
 This is a companion app to to [The Splunk CTF Scoreboard app](https://github.com/splunk/SA-ctf_scoreboard). Please see the documentation there.
 
 ## Authors

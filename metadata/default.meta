@@ -138,25 +138,25 @@ version = 6.5.0
 modtime = 1481659230.514563000
 
 [savedsearches/Load%20sample%20users%2Fteams]
-access = read : [ admin, ctf_admin ], write : [ admin, ctf_admin ]
+access = read : [ admin, ctf_admin, ctf_answers_service ], write : [ admin, ctf_admin ]
 export = none
 owner = admin
-version = 6.5.2
-modtime = 1491700182.476918000
+version = 8.2.4
+modtime = 1643129117.014270000
 
 [savedsearches/Load%20sample%20questions]
-access = read : [ admin, ctf_admin ], write : [ admin, ctf_admin ]
+access = read : [ admin, ctf_admin, ctf_answers_service ], write : [ admin, ctf_admin ]
 export = none
 owner = admin
-version = 6.5.2
-modtime = 1491700177.501342000
+version = 8.2.4
+modtime = 1643129111.603712000
 
 [savedsearches/Load%20sample%20answers]
-access = read : [ admin, ctf_admin ], write : [ admin, ctf_admin ]
+access = read : [ admin, ctf_admin, ctf_answers_service ], write : [ admin, ctf_admin ]
 export = none
 owner = admin
-version = 6.5.1
-modtime = 1484778706.196431000
+version = 8.2.4
+modtime = 1643129049.801713000
 
 [views/load_sample_answers]
 owner = admin
@@ -208,18 +208,18 @@ version = 6.5.2
 modtime = 1491699651.701247000
 
 [savedsearches/Load%20sample%20hints]
-access = read : [ admin, ctf_admin ], write : [ admin, ctf_admin ]
+access = read : [ admin, ctf_admin, ctf_answers_service ], write : [ admin, ctf_admin ]
 export = none
 owner = admin
-version = 6.5.2
-modtime = 1491700172.013399000
+version = 8.2.4
+modtime = 1643129099.711765000
 
 [savedsearches/Load%20sample%20hint%20entitlements]
-access = read : [ admin, ctf_admin ], write : [ admin, ctf_admin ]
+access = read : [ admin, ctf_admin, ctf_answers_service ], write : [ admin, ctf_admin ]
 export = none
 owner = admin
-version = 6.6.3
-modtime = 1503541327.597362000
+version = 8.2.4
+modtime = 1643129094.846293000
 
 [views/load_sample_hint_entitlements]
 access = read : [ admin, ctf_admin, ctf_answers_service ], write : [ admin, ctf_admin ]
@@ -336,11 +336,11 @@ export = none
 owner = admin
 
 [savedsearches/Load%20sample%20badges]
-access = read : [ admin, ctf_admin ], write : [ admin, ctf_admin ]
+access = read : [ admin, ctf_admin, ctf_answers_service ], write : [ admin, ctf_admin ]
 export = none
 owner = admin
-version = 6.6.3
-modtime = 1503521358.726232000
+version = 8.2.4
+modtime = 1643129089.053515000
 
 [views/load_sample_badges]
 access = read : [ admin, ctf_admin, ctf_answers_service ], write : [ admin, ctf_admin ]
@@ -350,11 +350,11 @@ version = 6.6.3
 modtime = 1503540590.782860000
 
 [savedsearches/Load%20sample%20badge%20entitlements]
-access = read : [ admin, ctf_admin ], write : [ admin, ctf_admin ]
+access = read : [ admin, ctf_admin, ctf_answers_service ], write : [ admin, ctf_admin ]
 export = none
 owner = admin
-version = 6.6.3
-modtime = 1503541500.326578000
+version = 8.2.4
+modtime = 1643129082.570914000
 
 [views/load_sample_badge_entitlements]
 access = read : [ admin, ctf_admin, ctf_answers_service ], write : [ admin, ctf_admin ]
@@ -455,11 +455,11 @@ version = 7.2.3
 modtime = 1548947703.942672000
 
 [savedsearches/Load%20sample%20User%20Agreements]
-access = read : [ admin, ctf_admin ], write : [ admin, ctf_admin ]
+access = read : [ admin, ctf_admin, ctf_answers_service ], write : [ admin, ctf_admin ]
 export = system
 owner = admin
-version = 7.2.3
-modtime = 1548947571.624958000
+version = 8.2.4
+modtime = 1643129065.818439000
 
 [savedsearches/Load%20staged%20User%20Agreements]
 access = read : [ admin, ctf_admin ], write : [ admin, ctf_admin ]
@@ -478,3 +478,4 @@ export = none
 owner = nobody
 version = 7.3.6
 modtime = 1594075897.523773000
+
